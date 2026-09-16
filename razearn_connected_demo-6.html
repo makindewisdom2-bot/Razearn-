@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>RazEarn — Connected Demo</title>
+<style>
+:root{--bg:#f5f7fb;--card:#fff;--ink:#111827;--muted:#667085;--primary:#10b981;--primary2:#059669;--line:#e7eaf0;--dark:#0b1220}
+*{box-sizing:border-box}body{margin:0;font-family:Inter,Arial,sans-serif;background:var(--bg);color:var(--ink)}
+header{background:linear-gradient(135deg,#07111f,#12352e);color:white;padding:15px 16px;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:20;box-shadow:0 5px 20px #0002}
+.logo{font-size:24px;font-weight:900;letter-spacing:-1px}.logo span{color:#34d399}
+.wrap{max-width:1050px;margin:auto;padding:16px}.card{background:var(--card);border-radius:20px;padding:18px;margin:13px 0;box-shadow:0 8px 30px #1018280a;border:1px solid #eef1f5}
+input,button,select{width:100%;padding:13px;margin:6px 0;border-radius:12px;border:1px solid #dfe4ec;font-size:15px}
+input:focus,select:focus{outline:2px solid #a7f3d0;border-color:#10b981}
+button{background:var(--dark);color:white;border:0;font-weight:800;cursor:pointer;transition:.15s}
+button:active{transform:scale(.98)}.green{background:linear-gradient(135deg,var(--primary),var(--primary2))}.red{background:#ef4444}.gray{background:#667085}
+nav{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:12px}nav button{width:auto;padding:10px 13px;border-radius:11px}
+.hidden{display:none}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px}
+.stat{font-size:27px;font-weight:900;margin-top:5px}.muted{color:var(--muted);font-size:13px}.small{font-size:12px}
+.hero{background:linear-gradient(135deg,#07111f,#0d3b31);color:white;border:0;overflow:hidden;position:relative}
+.hero:after{content:"";position:absolute;width:180px;height:180px;border-radius:50%;right:-70px;top:-80px;background:#34d39922}
+.hero h1{margin:0 0 6px;font-size:28px}.hero p{color:#cbd5e1}
+.balance{background:linear-gradient(135deg,#10b981,#047857);color:white;border:0}.balance .muted{color:#d1fae5}
+.task{border:1px solid var(--line);border-radius:16px;padding:15px;margin:10px 0;background:#fff}
+.badge{display:inline-block;padding:5px 9px;border-radius:20px;background:#ecfdf5;color:#047857;font-size:12px;font-weight:800}
+.notice{background:#fff8db;border:1px solid #f3d77b;padding:12px;border-radius:14px;font-size:13px}
+table{width:100%;border-collapse:collapse;font-size:13px}th,td{padding:9px;border-bottom:1px solid #eee;text-align:left}
+.section-title{display:flex;justify-content:space-between;align-items:center}.section-title h2{margin:4px 0}
+.quick{display:grid;grid-template-columns:repeat(3,1fr);gap:9px}.quick button{background:#fff;color:#111827;border:1px solid var(--line);padding:13px 7px}
+.auth-card{max-width:520px;margin:22px auto}.adminpage .card{border-radius:18px}
+@media(max-width:520px){.wrap{padding:11px}.card{padding:15px;border-radius:17px}.hero h1{font-size:24px}.stat{font-size:24px}.quick{grid-template-columns:1fr 1fr 1fr}nav{position:sticky;top:61px;background:var(--bg);padding:7px 0;z-index:10}nav button{font-size:12px;padding:9px 10px}}
+</style>
+</head>
+<body>
+<header><div class="logo">Raz<span>Earn</span></div><div id="topUser" class="small"></div></header>
+<div class="wrap">
+
+
+<div id="landing" class="card hero" style="padding:26px 20px;margin-bottom:14px">
+  <div style="font-size:12px;font-weight:800;color:#6ee7b7;letter-spacing:1px">WELCOME TO RAZEARN</div>
+  <h1 style="font-size:34px;margin:8px 0">Earn from simple tasks.</h1>
+  <p style="max-width:650px">Complete available tasks, track your earnings and request withdrawals from one simple dashboard.</p>
+  <div class="grid" style="margin-top:18px">
+    <div><b>🎯 Simple Tasks</b><div class="small">Clear instructions and rewards.</div></div>
+    <div><b>💰 Track Earnings</b><div class="small">See your wallet and history.</div></div>
+    <div><b>🏦 Withdraw</b><div class="small">₦1,500 minimum in this prototype.</div></div>
+  </div>
+</div>
+<div id="auth">
+  <div class="card hero auth-card">
+    <h2>Welcome to RazEarn</h2>
+    <p class="muted">Free connected prototype — for testing only.</p>
+    <div class="notice">Demo only: data is stored in this browser. Do not use real passwords or real money.</div>
+  </div>
+  <div class="card auth-card">
+    <h3>Create your account</h3>
+    <input id="suName" placeholder="Full name">
+    <input id="suEmail" placeholder="Email">
+    <input id="suPass" type="password" placeholder="Password">
+    <button class="green" onclick="signup()">Create Account</button>
+    <p id="suMsg" class="small"></p>
+  </div>
+  <div class="card auth-card">
+    <h3>Login to RazEarn</h3>
+    <input id="liEmail" placeholder="Email">
+    <input id="liPass" type="password" placeholder="Password">
+    <button onclick="login()">Login</button>
+    <p id="liMsg" class="small"></p>
+  </div>
+  <div class="card auth-card">
+    <h3>How RazEarn Works</h3>
+    <p class="muted">1. Create an account → 2. Complete a task → 3. Earn into your wallet → 4. Request a withdrawal when you reach ₦1,500.</p>
+  </div>
+  <div class="card">
+    <h3>Admin Demo</h3>
+    <p class="muted">Demo admin login: <b>admin@razearn.test</b> / <b>admin123</b></p>
+    <button class="gray" onclick="adminLogin()">Open Admin</button>
+  </div>
+</div>
+
+<div id="app" class="hidden">
+<nav>
+<button onclick="showPage('dashboard')">Dashboard</button>
+<button onclick="showPage('tasks')">Tasks</button>
+<button onclick="showPage('history')">History</button>
+<button onclick="showPage('withdraw')">Withdraw</button>
+<button class="red" onclick="logout()">Logout</button>
+</nav>
+
+<section id="dashboard" class="page">
+<div class="card hero"><h1>Earn. Complete. Withdraw.</h1><p>Welcome back to RazEarn — complete available tasks and build your earnings.</p></div>
+<div class="card balance"><div class="muted">Available Balance</div><div class="stat" id="bal">₦0</div><div class="small">Demo wallet • Real payouts are not connected</div></div>
+<div class="quick"><button onclick="showPage('tasks')">🎯<br>Tasks</button><button onclick="showPage('history')">📊<br>History</button><button onclick="showPage('withdraw')">💸<br>Withdraw</button></div>
+<div class="card"><div class="section-title"><h2>Account Overview</h2><span class="badge">Active</span></div><p class="muted">Keep completing tasks to increase your available balance.</p></div>
+<div class="grid">
+<div class="card"><div class="muted">Total Earnings</div><div class="stat" id="earned">₦0</div></div>
+<div class="card"><div class="muted">Your Referral Code</div><div class="stat" id="ref">---</div></div>
+</div>
+<div class="card"><h2>Hello, <span id="dashName"></span> 👋</h2><p class="muted">Complete available tasks to earn demo money.</p></div>
+</section>
+
+<section id="tasks" class="page hidden">
+<div class="card"><h2>Available Tasks</h2><div id="taskList"></div></div>
+</section>
+
+<section id="history" class="page hidden">
+<div class="card"><h2>Earnings & Transactions</h2><div id="historyList"></div></div>
+</section>
+
+<section id="withdraw" class="page hidden">
+<div class="card">
+<h2>Withdraw Funds</h2>
+<p class="muted">Minimum withdrawal: ₦1,500. Test mode — no real money is sent.</p>
+<div class="notice">🔒 Demo only. Real bank verification will require a secure backend and payment provider.</div>
+<input id="wAmount" type="number" min="100" placeholder="Withdrawal amount (₦)">
+<select id="wBank"><option value="">Select bank</option><option>Access Bank</option><option>GTBank</option><option>First Bank</option><option>UBA</option><option>Zenith Bank</option><option>Opay</option><option>PalmPay</option><option>Moniepoint</option><option>Other</option></select>
+<input id="wName" placeholder="Account name">
+<input id="wAccount" inputmode="numeric" maxlength="10" placeholder="10-digit account number">
+<button class="green" onclick="withdraw()">Submit Withdrawal Request</button>
+<p id="wMsg" class="small"></p>
+</div>
+<div class="card"><h3>Withdrawal Status</h3><div id="myWithdrawals"></div></div>
+</section>
+</div>
+
+<div id="admin" class="hidden">
+<nav>
+<button onclick="adminPage('aDash')">Admin Home</button>
+<button onclick="adminPage('aTasks')">Manage Tasks</button>
+<button onclick="adminPage('aUsers')">Users</button>
+<button onclick="adminPage('aWithdraw')">Withdrawals</button>
+<button class="red" onclick="adminLogout()">Exit Admin</button>
+</nav>
+
+<section id="aDash" class="adminpage">
+<div class="grid">
+<div class="card"><div class="muted">Users</div><div class="stat" id="aUsersCount">0</div></div>
+<div class="card"><div class="muted">Tasks</div><div class="stat" id="aTaskCount">0</div></div>
+<div class="card"><div class="muted">Withdrawal Requests</div><div class="stat" id="aWithdrawCount">0</div></div>
+</div>
+<div class="card"><h2>RazEarn Admin</h2><p class="muted">Control panel for the local prototype.</p></div>
+</section>
+
+<section id="aTasks" class="adminpage hidden">
+<div class="card">
+<h2>Create Task</h2>
+<input id="tTitle" placeholder="Task title">
+<input id="tReward" type="number" placeholder="Reward in ₦">
+<input id="tDesc" placeholder="Short task description">
+<button class="green" onclick="createTask()">Create Task</button>
+</div>
+<div class="card"><h2>Current Tasks</h2><div id="adminTasks"></div></div>
+</section>
+
+<section id="aUsers" class="adminpage hidden">
+<div class="card"><h2>Registered Users</h2><div id="usersList"></div></div>
+</section>
+
+<section id="aWithdraw" class="adminpage hidden">
+<div class="card"><h2>Withdrawal Requests</h2><div id="withdrawList"></div></div>
+</section>
+</div>
+
+</div>
+<script>
+const KEY='razearn_connected_v1';
+const defaultData={
+ users:[], tasks:[
+  {id:1,title:'Quick Start Task',reward:50,desc:'Open the task and mark it complete.'},
+  {id:2,title:'Profile Setup Task',reward:25,desc:'Complete your RazEarn profile in this demo.'}
+ ], withdrawals:[], current:null
+};
+function data(){let x=localStorage.getItem(KEY);if(!x){localStorage.setItem(KEY,JSON.stringify(defaultData));return structuredClone(defaultData)}return JSON.parse(x)}
+function save(x){localStorage.setItem(KEY,JSON.stringify(x))}
+function money(n){return '₦'+Number(n||0).toLocaleString()}
+function id(){return Date.now()+Math.floor(Math.random()*1000)}
+function signup(){
+ let d=data(),name=suName.value.trim(),email=suEmail.value.trim().toLowerCase(),pass=suPass.value;
+ if(!name||!email||!pass)return suMsg.textContent='Fill all fields.';
+ if(d.users.some(u=>u.email===email))return suMsg.textContent='Email already exists.';
+ d.users.push({id:id(),name,email,pass,balance:0,earned:0,ref:'RAZ'+Math.random().toString(36).slice(2,7).toUpperCase(),history:[]});
+ save(d);suMsg.textContent='Account created. You can now log in.';
+ suName.value=suEmail.value=suPass.value='';
+}
+function login(){
+ let d=data(),email=liEmail.value.trim().toLowerCase(),pass=liPass.value;
+ let u=d.users.find(x=>x.email===email&&x.pass===pass);
+ if(!u)return liMsg.textContent='Invalid email or password.';
+ d.current=u.id;save(d);startUser();
+}
+function startUser(){landing.classList.add('hidden');auth.classList.add('hidden');admin.classList.add('hidden');app.classList.remove('hidden');renderUser();showPage('dashboard')}
+function currentUser(){let d=data();return d.users.find(u=>u.id===d.current)}
+function renderUser(){
+ let u=currentUser();if(!u)return;
+ topUser.textContent=u.email;dashName.textContent=u.name;bal.textContent=money(u.balance);earned.textContent=money(u.earned);ref.textContent=u.ref;
+ renderTasks();renderHistory();renderMyWithdrawals();
+}
+function showPage(p){document.querySelectorAll('.page').forEach(x=>x.classList.add('hidden'));document.getElementById(p).classList.remove('hidden');renderUser()}
+function renderTasks(){
+ let d=data(),u=currentUser(),done=new Set((u.history||[]).filter(h=>h.type==='task').map(h=>h.taskId));
+ taskList.innerHTML=d.tasks.map(t=>`<div class="task"><b>${esc(t.title)}</b> <span class="badge">${money(t.reward)}</span><p class="muted">${esc(t.desc)}</p>${done.has(t.id)?'<span class="muted">Completed</span>':'<button class="green" onclick="completeTask('+t.id+')">Complete Task</button>'}</div>`).join('')||'<p>No tasks yet.</p>';
+}
+function completeTask(tid){
+ let d=data(),u=currentUser(),t=d.tasks.find(x=>x.id===tid);if(!t)return;
+ if((u.history||[]).some(h=>h.type==='task'&&h.taskId===tid))return;
+ u.balance+=Number(t.reward);u.earned+=Number(t.reward);u.history.unshift({id:id(),type:'task',taskId:tid,title:t.title,amount:Number(t.reward),date:new Date().toLocaleString()});
+ save(d);renderUser();alert('Task completed. '+money(t.reward)+' added to your demo balance.');
+}
+function renderHistory(){
+ let u=currentUser();historyList.innerHTML=(u.history||[]).map(h=>`<div class="task"><b>${esc(h.title||h.type)}</b><br><span class="badge">+${money(h.amount)}</span><div class="muted">${esc(h.date)}</div></div>`).join('')||'<p class="muted">No transactions yet.</p>';
+}
+function withdraw(){
+ let d=data(),u=currentUser(),amount=Number(wAmount.value),bank=wBank.value,name=wName.value.trim(),account=wAccount.value.trim();
+ if(!amount||amount<1500)return wMsg.textContent='Minimum withdrawal is ₦1,500 in this demo.';
+ if(amount>u.balance)return wMsg.textContent='Insufficient demo balance.';
+ if(!bank)return wMsg.textContent='Select your bank.';
+ if(!name)return wMsg.textContent='Enter the account name.';
+ if(!/^\d{10}$/.test(account))return wMsg.textContent='Account number must contain 10 digits.';
+ u.balance-=amount;
+ d.withdrawals.unshift({id:id(),userId:u.id,user:u.name,amount,method:'Bank Transfer (Demo)',bank,accountName:name,account,status:'Pending',date:new Date().toLocaleString()});
+ u.history.unshift({id:id(),type:'withdrawal',title:'Withdrawal request — '+bank,amount:-amount,date:new Date().toLocaleString()});
+ save(d);wAmount.value='';wName.value='';wAccount.value='';wBank.value='';
+ wMsg.textContent='Withdrawal request submitted. Status: Pending (demo).';renderUser();
+}
+function renderMyWithdrawals(){
+ let d=data(),u=currentUser(),items=d.withdrawals.filter(w=>w.userId===u.id);
+ myWithdrawals.innerHTML=items.map(w=>`<div class="task"><b>${money(w.amount)}</b><br>${esc(w.bank||w.method)} • ${esc(w.account)}<br><span class="badge">${esc(w.status)}</span><div class="muted">${esc(w.date)}</div></div>`).join('')||'<p class="muted">No withdrawal requests yet.</p>';
+}
+function logout(){let d=data();d.current=null;save(d);app.classList.add('hidden');auth.classList.remove('hidden');landing.classList.remove('hidden');topUser.textContent=''}
+function adminLogin(){landing.classList.add('hidden');auth.classList.add('hidden');admin.classList.remove('hidden');renderAdmin();adminPage('aDash')}
+function adminLogout(){admin.classList.add('hidden');auth.classList.remove('hidden');landing.classList.remove('hidden')}
+function adminPage(p){document.querySelectorAll('.adminpage').forEach(x=>x.classList.add('hidden'));document.getElementById(p).classList.remove('hidden');renderAdmin()}
+function createTask(){
+ let d=data(),title=tTitle.value.trim(),reward=Number(tReward.value),desc=tDesc.value.trim();
+ if(!title||!reward)return alert('Enter task title and reward.');
+ d.tasks.push({id:id(),title,reward,desc:desc||'Complete this task.'});save(d);
+ tTitle.value=tReward.value=tDesc.value='';renderAdmin();alert('Task created.');
+}
+function deleteTask(tid){let d=data();d.tasks=d.tasks.filter(t=>t.id!==tid);save(d);renderAdmin()}
+function renderAdmin(){
+ let d=data();aUsersCount.textContent=d.users.length;aTaskCount.textContent=d.tasks.length;aWithdrawCount.textContent=d.withdrawals.length;
+ adminTasks.innerHTML=d.tasks.map(t=>`<div class="task"><b>${esc(t.title)}</b> — ${money(t.reward)}<p class="muted">${esc(t.desc)}</p><button class="red" onclick="deleteTask(${t.id})">Delete</button></div>`).join('');
+ usersList.innerHTML=d.users.map(u=>`<div class="task"><b>${esc(u.name)}</b><br>${esc(u.email)}<br>Balance: ${money(u.balance)} · Earned: ${money(u.earned)}<br><span class="small">Ref: ${u.ref}</span></div>`).join('')||'<p>No users yet.</p>';
+ withdrawList.innerHTML=d.withdrawals.map(w=>`<div class="task"><b>${esc(w.user)}</b> — ${money(w.amount)}<br>${esc(w.bank||w.method)} · ${esc(w.accountName||'')} · ${esc(w.account)}<br><span class="badge">${esc(w.status)}</span> <span class="muted">${esc(w.date)}</span><br>${w.status==='Pending'?`<div class="row"><button class="green" onclick="approveW(${w.id})">Approve</button><button class="red" onclick="rejectW(${w.id})">Reject</button></div>`:''}</div>`).join('')||'<p>No withdrawal requests.</p>';
+}
+function approveW(wid){let d=data(),w=d.withdrawals.find(x=>x.id===wid);if(w){w.status='Approved (Demo)';save(d);renderAdmin()}}
+function rejectW(wid){let d=data(),w=d.withdrawals.find(x=>x.id===wid);if(w&&w.status==='Pending'){let u=d.users.find(x=>x.id===w.userId);if(u){u.balance+=Number(w.amount);u.history.unshift({id:id(),type:'refund',title:'Withdrawal refunded',amount:Number(w.amount),date:new Date().toLocaleString()})}w.status='Rejected (Demo)';save(d);renderAdmin()}}
+function esc(s){return String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]))}
+</script>
+</body>
+</html>
